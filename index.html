@@ -508,9 +508,53 @@
                 delete r.dataset.encounterKey;
             });
             document.getElementById('encounter-info').textContent = DEFAULT_INFO;
+            refreshOrderOptions(); // re-enable every order number
+            reorderGroups();       // restore the default group order
             try {
                 localStorage.removeItem(STORAGE_KEY);
             } catch (e) { /* ignore */ }
+        }
+
+        // ---- Turn order: disable taken numbers & re-sort the four groups ----
+        // Each region's Order dropdown picks its turn (1-4). A number picked by
+        // one region is disabled in the others so it can't be chosen twice, and
+        // the four Battle/Boss groups are re-sorted in the table to match. Regions
+        // with no number yet keep their default relative order, after the numbered
+        // ones. The astrael and lifemother rows never move.
+        function refreshOrderOptions() {
+            const taken = new Set();
+            REGION_KEYS.forEach(region => {
+                const v = document.getElementById(`${region}-order`).value;
+                if (v !== '?') taken.add(v);
+            });
+            REGION_KEYS.forEach(region => {
+                const sel = document.getElementById(`${region}-order`);
+                Array.from(sel.options).forEach(opt => {
+                    if (opt.value === '?') return;
+                    // Grey out a number taken by some OTHER region; keep this
+                    // select's own current pick selectable.
+                    opt.disabled = taken.has(opt.value) && opt.value !== sel.value;
+                });
+            });
+        }
+
+        function reorderGroups() {
+            const tbody = document.getElementById('encounter-tbody');
+            const anchor = document.querySelector('.encounter-label[data-key="lifemother"]').closest('tr');
+            const rowOf = key => document.querySelector(`.encounter-label[data-key="${key}"]`).closest('tr');
+
+            const sorted = REGION_KEYS.map((region, idx) => {
+                const n = parseInt(document.getElementById(`${region}-order`).value, 10);
+                return { region, idx, order: Number.isNaN(n) ? Infinity : n };
+            }).sort((a, b) => (a.order - b.order) || (a.idx - b.idx));
+
+            // Re-insert each group's Battle then Boss row just above lifemother,
+            // in sorted order, so the groups end up ordered between astrael and
+            // lifemother without disturbing those two fixed rows.
+            sorted.forEach(({ region }) => {
+                tbody.insertBefore(rowOf(`${region}-battle`), anchor);
+                tbody.insertBefore(rowOf(`${region}-boss`), anchor);
+            });
         }
 
         // ---- Table row generation (edit layout here) ----
@@ -607,10 +651,20 @@
 
         // Persist any dropdown change (selects fire 'change' which bubbles to the
         // table); row clicks and the simple-mode toggle call saveState directly.
-        document.getElementById('encounter-table').addEventListener('change', saveState);
+        // An Order pick additionally re-syncs disabled numbers and re-sorts groups.
+        document.getElementById('encounter-table').addEventListener('change', (e) => {
+            if (e.target && e.target.classList.contains('order-select')) {
+                refreshOrderOptions();
+                reorderGroups();
+            }
+            saveState();
+        });
 
-        // Restore the saved run last, after every select has its options.
+        // Restore the saved run last, after every select has its options, then
+        // apply the saved turn order (disabled numbers + group sort).
         restoreState();
+        refreshOrderOptions();
+        reorderGroups();
     </script>
 </body>
 </html>
