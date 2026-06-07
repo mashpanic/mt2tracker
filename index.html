@@ -288,18 +288,20 @@
         // in the table (the <td class="encounter-label"> cell) and the info box's
         // default "[name] information" text are both generated from "name" below,
         // so it only has to be typed once. "groupClass" applies the colored left
-        // border that visually pairs Battle/Boss rows for the same region.
+        // border that visually pairs Battle/Boss rows for the same region. Each
+        // encounter's variant <select> id is always "<key>-variant", so it's
+        // derived where needed rather than stored here.
         const encounterInfo = {
-            'astrael':          { name: 'Astrael',          groupClass: '',               variantId: 'astrael-variant' },
-            'maera-battle':     { name: 'Maera Battle',     groupClass: 'group-maera',    variantId: 'maera-battle-variant' },
-            'maera-boss':       { name: 'Maera Boss',       groupClass: 'group-maera',    variantId: 'maera-boss-variant' },
-            'thaddeus-battle':  { name: 'Thaddeus Battle',  groupClass: 'group-thaddeus', variantId: 'thaddeus-battle-variant' },
-            'thaddeus-boss':    { name: 'Thaddeus Boss',    groupClass: 'group-thaddeus', variantId: 'thaddeus-boss-variant' },
-            'tivi-battle':      { name: 'Tivi Battle',      groupClass: 'group-tivi',     variantId: 'tivi-battle-variant' },
-            'tivi-boss':        { name: 'Tivi Boss',        groupClass: 'group-tivi',     variantId: 'tivi-boss-variant' },
-            'lylith-battle':    { name: 'Lylith Battle',    groupClass: 'group-lylith',   variantId: 'lylith-battle-variant' },
-            'lylith-boss':      { name: 'Lylith Boss',      groupClass: 'group-lylith',   variantId: 'lylith-boss-variant' },
-            'lifemother':       { name: 'Lifemother',       groupClass: '',               variantId: 'lifemother-variant' }
+            'astrael':          { name: 'Astrael',          groupClass: ''               },
+            'maera-battle':     { name: 'Maera Battle',     groupClass: 'group-maera'    },
+            'maera-boss':       { name: 'Maera Boss',       groupClass: 'group-maera'    },
+            'thaddeus-battle':  { name: 'Thaddeus Battle',  groupClass: 'group-thaddeus' },
+            'thaddeus-boss':    { name: 'Thaddeus Boss',    groupClass: 'group-thaddeus' },
+            'tivi-battle':      { name: 'Tivi Battle',      groupClass: 'group-tivi'     },
+            'tivi-boss':        { name: 'Tivi Boss',        groupClass: 'group-tivi'     },
+            'lylith-battle':    { name: 'Lylith Battle',    groupClass: 'group-lylith'   },
+            'lylith-boss':      { name: 'Lylith Boss',      groupClass: 'group-lylith'   },
+            'lifemother':       { name: 'Lifemother',       groupClass: ''               }
         };
 
         // Fills in each row's name label (and group-color border) from encounterInfo,
@@ -398,10 +400,12 @@
             }
         }
 
-        
+        // Returns the info-box HTML for an encounter. variantDescriptions entries
+        // may contain HTML (e.g. <br>, <strong>) since the result is assigned via
+        // innerHTML; the values are all author-controlled, so this is safe.
         function getDisplayText(key) {
             const info = encounterInfo[key];
-            const variantEl = document.getElementById(info.variantId);
+            const variantEl = document.getElementById(`${key}-variant`);
             if (variantEl && variantEl.value) {
                 if (variantDescriptions[variantEl.value]) {
                     return variantEl.value + ': ' + variantDescriptions[variantEl.value];
@@ -418,7 +422,7 @@
 
             row.classList.add('selected-row');
             row.dataset.encounterKey = key;
-            document.getElementById('encounter-info').textContent = getDisplayText(key);
+            document.getElementById('encounter-info').innerHTML = getDisplayText(key);
             saveState();
         }
 
@@ -438,7 +442,7 @@
             }
 
             if (row.dataset.encounterKey) {
-                document.getElementById('encounter-info').textContent = getDisplayText(row.dataset.encounterKey);
+                document.getElementById('encounter-info').innerHTML = getDisplayText(row.dataset.encounterKey);
             }
         }
 
@@ -508,7 +512,7 @@
                 r.classList.remove('selected-row');
                 delete r.dataset.encounterKey;
             });
-            document.getElementById('encounter-info').textContent = DEFAULT_INFO;
+            document.getElementById('encounter-info').innerHTML = DEFAULT_INFO;
             refreshOrderOptions(); // re-enable every order number
             reorderGroups();       // restore the default group order
             try {
