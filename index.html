@@ -12,7 +12,13 @@
     <title>Soul Savior Run Tracker</title>
     <style>
         body { font-family: system-ui, sans-serif; background: #121214; color: #e1e1e6; padding: 20px; }
-        table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+        /* No explicit width: let the table size itself to its natural content
+           width (the default "shrink-to-fit" behavior) rather than always
+           stretching to fill the window. This keeps columns close together
+           and easy to scan across in both full and simple mode -- especially
+           simple mode, where fewer columns would otherwise leave Region
+           (the one flexible column) stretched out across the full width. */
+        table { border-collapse: collapse; margin-bottom: 20px; }
         th, td { border: 1px solid #29292e; padding: 12px; text-align: left; vertical-align: middle; }
         th { background: #19191c; }
 
