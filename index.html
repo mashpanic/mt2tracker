@@ -12,33 +12,15 @@
     <title>Soul Savior Run Tracker</title>
     <style>
         body { font-family: system-ui, sans-serif; background: #121214; color: #e1e1e6; padding: 20px; }
-        /* No explicit width: let the table size itself to its natural content
-           width (the default "shrink-to-fit" behavior) rather than always
-           stretching to fill the window. This keeps columns close together
-           and easy to scan across in both full and simple mode -- especially
-           simple mode, where fewer columns would otherwise leave Region
-           (the one flexible column) stretched out across the full width. */
+        /* Plain auto table layout: no explicit width or table-layout mode, and
+           no per-column width rules. The browser sizes every column purely from
+           its content (the inner .node-slot/.full-name-slot/.variant-slot boxes
+           still control how wide each selector looks). This is a clean baseline
+           to build column-width tweaks back up from, if needed. */
         table { border-collapse: collapse; margin-bottom: 20px; }
         th, td { border: 1px solid #29292e; padding: 12px; text-align: left; vertical-align: middle; }
         th { background: #19191c; }
 
-        /* Shrink the Order, Variant, Central Nodes, Left/Right Track, and Path columns
-           to fit their fixed-width boxes instead of stretching with extra empty space.
-           This leaves the Region column as the one flexible column that absorbs any
-           extra table width.
-
-           Boss rows omit their own Order cell (it's covered by a rowspan from the
-           battle row above), which shifts every cell's position by one. Counting
-           from the END of the row instead of the start stays correct regardless of
-           whether the Order cell is present, since Variant/Central Nodes/Left/Right/
-           Path are always the last 5 cells. The Order cell itself is matched by its
-           .order-cell class (for the header, which always has all 7 columns, plain
-           position works fine). */
-        th:nth-child(1), td.order-cell,
-        th:nth-last-child(-n+5), td:nth-last-child(-n+5) {
-            width: 1%;
-            white-space: nowrap;
-        }
         select { background: #202024; color: #fff; border: 1px solid #323238; padding: 6px; border-radius: 4px; width: 95%; }
         button { background: #04d361; color: #000; border: none; padding: 10px 20px; font-weight: bold; border-radius: 4px; cursor: pointer; }
         pre { background: #19191c; padding: 15px; border-radius: 4px; overflow-x: auto; border: 1px solid #29292e; }
@@ -150,7 +132,7 @@
 
     
     
-    <table id="encounter-table">
+    <table id="encounter-table" class="simple-mode">
         <thead>
             <tr>
                 <th>Order</th>
@@ -532,7 +514,7 @@
     </div>
 
     <label id="simple-mode-toggle">
-        <input type="checkbox" onchange="toggleSimpleMode(this)">
+        <input type="checkbox" checked onchange="toggleSimpleMode(this)">
         Simple mode
     </label>
 
