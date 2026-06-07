@@ -112,13 +112,32 @@
         #attribution a { color: #9d9da3; }
         #attribution a:hover { color: #04d361; }
 
+        /* Simple mode hides the last 3 columns (Left Track, Right Track, Path) */
+        #simple-mode-toggle {
+            margin-top: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9em;
+            color: #e1e1e6;
+            cursor: pointer;
+            user-select: none;
+        }
+        #simple-mode-toggle input { cursor: pointer; }
+
+        table.simple-mode th:nth-child(5), table.simple-mode td:nth-child(5),
+        table.simple-mode th:nth-child(6), table.simple-mode td:nth-child(6),
+        table.simple-mode th:nth-child(7), table.simple-mode td:nth-child(7) {
+            display: none;
+        }
+
     </style>
 </head>
 <body>
 
     
     
-    <table>
+    <table id="encounter-table">
         <thead>
             <tr>
                 <th>Order</th>
@@ -499,6 +518,11 @@
         Select a battle or boss to see information.
     </div>
 
+    <label id="simple-mode-toggle">
+        <input type="checkbox" onchange="toggleSimpleMode(this)">
+        Simple mode
+    </label>
+
     <footer id="attribution">
         Game information sourced from the <a href="https://monstertrain2.miraheze.org/wiki/Main_Page" target="_blank" rel="noopener">Monster Train 2 Wiki</a>.
         Content is available under <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener">Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)</a> unless otherwise noted.
@@ -764,6 +788,12 @@
             if (row.dataset.encounterKey) {
                 document.getElementById('encounter-info').textContent = getDisplayText(row.dataset.encounterKey);
             }
+        }
+
+        // Simple mode hides the last 3 columns (Left Track, Right Track, Path)
+        // by toggling a class on the table.
+        function toggleSimpleMode(checkbox) {
+            document.getElementById('encounter-table').classList.toggle('simple-mode', checkbox.checked);
         }
 
         populateEncounterLabels();
