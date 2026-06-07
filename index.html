@@ -9,6 +9,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Soul Savior Run Tracker</title>
     <style>
         body { font-family: system-ui, sans-serif; background: #121214; color: #e1e1e6; padding: 20px; }
@@ -50,7 +51,7 @@
             font-size: 0.9em;
         }
         .node-slot select {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; -webkit-appearance: none;
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; -webkit-appearance: none; appearance: none;
         }
         .node-slot option { background: #202024; color: #fff; font-size: 14px; }
         .node-slot:hover { border-color: #04d361; }
@@ -568,25 +569,35 @@
         const REGION_KEYS = ['maera', 'thaddeus', 'tivi', 'lylith'];
         const BOTTOM_ROWS = ['lifemother'];
 
-        function slot(id, selectClass, { full = true, variant = false, variantHandler = false } = {}) {
+        // The dropdowns are visually represented by styled boxes with the actual
+        // <select> sitting invisibly on top, so each one carries an aria-label to
+        // stay usable for screen readers. labelFor turns a key like "maera-boss"
+        // into a readable "Maera Boss".
+        const labelFor = key => key.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+
+        function slot(id, selectClass, { full = true, variant = false, variantHandler = false, aria = '' } = {}) {
             const classes = ['node-slot'];
             if (full) classes.push('full-name-slot');
             if (variant) classes.push('variant-slot');
             const onchange = variantHandler
                 ? 'updateNodeDisplay(this); handleVariantChange(this)'
                 : 'updateNodeDisplay(this)';
+            const ariaAttr = aria ? ` aria-label="${aria}"` : '';
             return `<div class="${classes.join(' ')}"><span class="label">?</span>`
-                 + `<select id="${id}" class="${selectClass}" onchange="${onchange}"></select></div>`;
+                 + `<select id="${id}" class="${selectClass}"${ariaAttr} onchange="${onchange}"></select></div>`;
         }
 
         const container = (...slots) => `<div class="node-container">${slots.join('')}</div>`;
         const cell = inner => `<td>${inner}</td>`;
-        const variantCell = id => cell(container(slot(id, 'variant-select', { variant: true, variantHandler: true })));
+        const variantCell = id => {
+            const key = id.replace(/-variant$/, '');
+            return cell(container(slot(id, 'variant-select', { variant: true, variantHandler: true, aria: `${labelFor(key)} variant` })));
+        };
         const trackCell = (prefix, side) => cell(container(
-            slot(`${prefix}-${side}-1`, 'track-node-select'),
-            slot(`${prefix}-${side}-2`, 'track-node-select')
+            slot(`${prefix}-${side}-1`, 'track-node-select', { aria: `${labelFor(prefix)} ${side} track 1` }),
+            slot(`${prefix}-${side}-2`, 'track-node-select', { aria: `${labelFor(prefix)} ${side} track 2` })
         ));
-        const pathCell = prefix => cell(container(slot(`${prefix}-path-track`, 'path-track-select')));
+        const pathCell = prefix => cell(container(slot(`${prefix}-path-track`, 'path-track-select', { aria: `${labelFor(prefix)} path` })));
 
         // Standalone row (astrael / lifemother): no Order cell, variant only,
         // remaining columns disabled.
@@ -607,11 +618,11 @@
 
             const battle = `<tr class="selectable-row" onclick="selectEncounter(this, '${battleKey}')">`
                 + `<td class="order-cell" rowspan="2" onclick="event.stopPropagation()">`
-                + container(slot(`${region}-order`, 'order-select', { full: false }))
+                + container(slot(`${region}-order`, 'order-select', { full: false, aria: `${labelFor(region)} turn order` }))
                 + `</td>`
                 + `<td class="encounter-label" data-key="${battleKey}"></td>`
                 + variantCell(`${battleKey}-variant`)
-                + cell(container(slot(`${region}-n1`, 'central-node-select')))
+                + cell(container(slot(`${region}-n1`, 'central-node-select', { aria: `${labelFor(battleKey)} central node` })))
                 + trackCell(battleKey, 'left')
                 + trackCell(battleKey, 'right')
                 + pathCell(battleKey)
@@ -621,8 +632,8 @@
                 + `<td class="encounter-label" data-key="${bossKey}"></td>`
                 + variantCell(`${bossKey}-variant`)
                 + cell(container(
-                    slot(`${region}-n2`, 'central-node-select'),
-                    slot(`${region}-n3`, 'central-node-select')
+                    slot(`${region}-n2`, 'central-node-select', { aria: `${labelFor(bossKey)} central node 1` }),
+                    slot(`${region}-n3`, 'central-node-select', { aria: `${labelFor(bossKey)} central node 2` })
                   ))
                 + trackCell(bossKey, 'left')
                 + trackCell(bossKey, 'right')
