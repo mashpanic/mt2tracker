@@ -144,369 +144,7 @@
                 <th>Path</th>
             </tr>
         </thead>
-        <tbody>
-            <tr class="selectable-row" onclick="selectEncounter(this, 'astrael')">
-                <td class="disabled-cell order-cell">—</td>
-                <td class="encounter-label" data-key="astrael"></td>
-                <td>
-                    <div class="node-container">
-                        <div class="node-slot full-name-slot variant-slot">
-                            <span class="label">?</span>
-                            <select id="astrael-variant" class="variant-select" onchange="updateNodeDisplay(this); handleVariantChange(this)"></select>
-                        </div>
-                    </div>
-                </td>
-                <td class="disabled-cell">—</td>
-                <td class="disabled-cell">—</td>
-                <td class="disabled-cell">—</td>
-                <td class="disabled-cell">—</td>
-            </tr>
-
-            <tr class="selectable-row" onclick="selectEncounter(this, 'maera-battle')">
-                <td class="order-cell" rowspan="2" onclick="event.stopPropagation()">
-                    <div class="node-container">
-                        <div class="node-slot"><span class="label">?</span><select id="maera-order" class="order-select" onchange="updateNodeDisplay(this)"></select></div>
-                    </div>
-                </td>
-                <td class="encounter-label" data-key="maera-battle"></td>
-                <td>
-                    <div class="node-container">
-                        <div class="node-slot full-name-slot variant-slot">
-                            <span class="label">?</span>
-                            <select id="maera-battle-variant" class="variant-select" onchange="updateNodeDisplay(this); handleVariantChange(this)"></select>
-                        </div>
-                    </div>
-                </td>
-                <td>
-                    <div class="node-container">
-                        <div class="node-slot full-name-slot">
-                            <span class="label">?</span>
-                            <select id="maera-n1" class="central-node-select" onchange="updateNodeDisplay(this)"></select>
-                        </div>
-                    </div>
-                </td>
-                <td>
-                    <div class="node-container">
-                        <div class="node-slot full-name-slot"><span class="label">?</span><select id="maera-battle-left-1" class="track-node-select" onchange="updateNodeDisplay(this)"></select></div>
-                        <div class="node-slot full-name-slot"><span class="label">?</span><select id="maera-battle-left-2" class="track-node-select" onchange="updateNodeDisplay(this)"></select></div>
-                    </div>
-                </td>
-                <td>
-                    <div class="node-container">
-                        <div class="node-slot full-name-slot"><span class="label">?</span><select id="maera-battle-right-1" class="track-node-select" onchange="updateNodeDisplay(this)"></select></div>
-                        <div class="node-slot full-name-slot"><span class="label">?</span><select id="maera-battle-right-2" class="track-node-select" onchange="updateNodeDisplay(this)"></select></div>
-                    </div>
-                </td>
-                <td>
-                    <div class="node-container">
-                        <div class="node-slot full-name-slot"><span class="label">?</span><select id="maera-battle-path-track" class="path-track-select" onchange="updateNodeDisplay(this)"></select></div>
-                    </div>
-                </td>
-            </tr>
-            <tr class="selectable-row" onclick="selectEncounter(this, 'maera-boss')">
-                <td class="encounter-label" data-key="maera-boss"></td>
-                <td>
-                    <div class="node-container">
-                        <div class="node-slot full-name-slot variant-slot">
-                            <span class="label">?</span>
-                            <select id="maera-boss-variant" class="variant-select" onchange="updateNodeDisplay(this); handleVariantChange(this)"></select>
-                        </div>
-                    </div>
-                </td>
-                <td>
-                    <div class="node-container">
-                        <div class="node-slot full-name-slot">
-                            <span class="label">?</span>
-                            <select id="maera-n2" class="central-node-select" onchange="updateNodeDisplay(this)"></select>
-                        </div>
-                        <div class="node-slot full-name-slot">
-                            <span class="label">?</span>
-                            <select id="maera-n3" class="central-node-select" onchange="updateNodeDisplay(this)"></select>
-                        </div>
-                    </div>
-                </td>
-                <td>
-                    <div class="node-container">
-                        <div class="node-slot full-name-slot"><span class="label">?</span><select id="maera-boss-left-1" class="track-node-select" onchange="updateNodeDisplay(this)"></select></div>
-                        <div class="node-slot full-name-slot"><span class="label">?</span><select id="maera-boss-left-2" class="track-node-select" onchange="updateNodeDisplay(this)"></select></div>
-                    </div>
-                </td>
-                <td>
-                    <div class="node-container">
-                        <div class="node-slot full-name-slot"><span class="label">?</span><select id="maera-boss-right-1" class="track-node-select" onchange="updateNodeDisplay(this)"></select></div>
-                        <div class="node-slot full-name-slot"><span class="label">?</span><select id="maera-boss-right-2" class="track-node-select" onchange="updateNodeDisplay(this)"></select></div>
-                    </div>
-                </td>
-                <td>
-                    <div class="node-container">
-                        <div class="node-slot full-name-slot"><span class="label">?</span><select id="maera-boss-path-track" class="path-track-select" onchange="updateNodeDisplay(this)"></select></div>
-                    </div>
-                </td>
-            </tr>
-
-            <tr class="selectable-row" onclick="selectEncounter(this, 'thaddeus-battle')">
-                <td class="order-cell" rowspan="2" onclick="event.stopPropagation()">
-                    <div class="node-container">
-                        <div class="node-slot"><span class="label">?</span><select id="thaddeus-order" class="order-select" onchange="updateNodeDisplay(this)"></select></div>
-                    </div>
-                </td>
-                <td class="encounter-label" data-key="thaddeus-battle"></td>
-                <td>
-                    <div class="node-container">
-                        <div class="node-slot full-name-slot variant-slot">
-                            <span class="label">?</span>
-                            <select id="thaddeus-battle-variant" class="variant-select" onchange="updateNodeDisplay(this); handleVariantChange(this)"></select>
-                        </div>
-                    </div>
-                </td>
-                <td>
-                    <div class="node-container">
-                        <div class="node-slot full-name-slot">
-                            <span class="label">?</span>
-                            <select id="thaddeus-n1" class="central-node-select" onchange="updateNodeDisplay(this)"></select>
-                        </div>
-                    </div>
-                </td>
-                <td>
-                    <div class="node-container">
-                        <div class="node-slot full-name-slot"><span class="label">?</span><select id="thaddeus-battle-left-1" class="track-node-select" onchange="updateNodeDisplay(this)"></select></div>
-                        <div class="node-slot full-name-slot"><span class="label">?</span><select id="thaddeus-battle-left-2" class="track-node-select" onchange="updateNodeDisplay(this)"></select></div>
-                    </div>
-                </td>
-                <td>
-                    <div class="node-container">
-                        <div class="node-slot full-name-slot"><span class="label">?</span><select id="thaddeus-battle-right-1" class="track-node-select" onchange="updateNodeDisplay(this)"></select></div>
-                        <div class="node-slot full-name-slot"><span class="label">?</span><select id="thaddeus-battle-right-2" class="track-node-select" onchange="updateNodeDisplay(this)"></select></div>
-                    </div>
-                </td>
-                <td>
-                    <div class="node-container">
-                        <div class="node-slot full-name-slot"><span class="label">?</span><select id="thaddeus-battle-path-track" class="path-track-select" onchange="updateNodeDisplay(this)"></select></div>
-                    </div>
-                </td>
-            </tr>
-            <tr class="selectable-row" onclick="selectEncounter(this, 'thaddeus-boss')">
-                <td class="encounter-label" data-key="thaddeus-boss"></td>
-                <td>
-                    <div class="node-container">
-                        <div class="node-slot full-name-slot variant-slot">
-                            <span class="label">?</span>
-                            <select id="thaddeus-boss-variant" class="variant-select" onchange="updateNodeDisplay(this); handleVariantChange(this)"></select>
-                        </div>
-                    </div>
-                </td>
-                <td>
-                    <div class="node-container">
-                        <div class="node-slot full-name-slot">
-                            <span class="label">?</span>
-                            <select id="thaddeus-n2" class="central-node-select" onchange="updateNodeDisplay(this)"></select>
-                        </div>
-                        <div class="node-slot full-name-slot">
-                            <span class="label">?</span>
-                            <select id="thaddeus-n3" class="central-node-select" onchange="updateNodeDisplay(this)"></select>
-                        </div>
-                    </div>
-                </td>
-                <td>
-                    <div class="node-container">
-                        <div class="node-slot full-name-slot"><span class="label">?</span><select id="thaddeus-boss-left-1" class="track-node-select" onchange="updateNodeDisplay(this)"></select></div>
-                        <div class="node-slot full-name-slot"><span class="label">?</span><select id="thaddeus-boss-left-2" class="track-node-select" onchange="updateNodeDisplay(this)"></select></div>
-                    </div>
-                </td>
-                <td>
-                    <div class="node-container">
-                        <div class="node-slot full-name-slot"><span class="label">?</span><select id="thaddeus-boss-right-1" class="track-node-select" onchange="updateNodeDisplay(this)"></select></div>
-                        <div class="node-slot full-name-slot"><span class="label">?</span><select id="thaddeus-boss-right-2" class="track-node-select" onchange="updateNodeDisplay(this)"></select></div>
-                    </div>
-                </td>
-                <td>
-                    <div class="node-container">
-                        <div class="node-slot full-name-slot"><span class="label">?</span><select id="thaddeus-boss-path-track" class="path-track-select" onchange="updateNodeDisplay(this)"></select></div>
-                    </div>
-                </td>
-            </tr>
-
-            <tr class="selectable-row" onclick="selectEncounter(this, 'tivi-battle')">
-                <td class="order-cell" rowspan="2" onclick="event.stopPropagation()">
-                    <div class="node-container">
-                        <div class="node-slot"><span class="label">?</span><select id="tivi-order" class="order-select" onchange="updateNodeDisplay(this)"></select></div>
-                    </div>
-                </td>
-                <td class="encounter-label" data-key="tivi-battle"></td>
-                <td>
-                    <div class="node-container">
-                        <div class="node-slot full-name-slot variant-slot">
-                            <span class="label">?</span>
-                            <select id="tivi-battle-variant" class="variant-select" onchange="updateNodeDisplay(this); handleVariantChange(this)"></select>
-                        </div>
-                    </div>
-                </td>
-                <td>
-                    <div class="node-container">
-                        <div class="node-slot full-name-slot">
-                            <span class="label">?</span>
-                            <select id="tivi-n1" class="central-node-select" onchange="updateNodeDisplay(this)"></select>
-                        </div>
-                    </div>
-                </td>
-                <td>
-                    <div class="node-container">
-                        <div class="node-slot full-name-slot"><span class="label">?</span><select id="tivi-battle-left-1" class="track-node-select" onchange="updateNodeDisplay(this)"></select></div>
-                        <div class="node-slot full-name-slot"><span class="label">?</span><select id="tivi-battle-left-2" class="track-node-select" onchange="updateNodeDisplay(this)"></select></div>
-                    </div>
-                </td>
-                <td>
-                    <div class="node-container">
-                        <div class="node-slot full-name-slot"><span class="label">?</span><select id="tivi-battle-right-1" class="track-node-select" onchange="updateNodeDisplay(this)"></select></div>
-                        <div class="node-slot full-name-slot"><span class="label">?</span><select id="tivi-battle-right-2" class="track-node-select" onchange="updateNodeDisplay(this)"></select></div>
-                    </div>
-                </td>
-                <td>
-                    <div class="node-container">
-                        <div class="node-slot full-name-slot"><span class="label">?</span><select id="tivi-battle-path-track" class="path-track-select" onchange="updateNodeDisplay(this)"></select></div>
-                    </div>
-                </td>
-            </tr>
-            <tr class="selectable-row" onclick="selectEncounter(this, 'tivi-boss')">
-                <td class="encounter-label" data-key="tivi-boss"></td>
-                <td>
-                    <div class="node-container">
-                        <div class="node-slot full-name-slot variant-slot">
-                            <span class="label">?</span>
-                            <select id="tivi-boss-variant" class="variant-select" onchange="updateNodeDisplay(this); handleVariantChange(this)"></select>
-                        </div>
-                    </div>
-                </td>
-                <td>
-                    <div class="node-container">
-                        <div class="node-slot full-name-slot">
-                            <span class="label">?</span>
-                            <select id="tivi-n2" class="central-node-select" onchange="updateNodeDisplay(this)"></select>
-                        </div>
-                        <div class="node-slot full-name-slot">
-                            <span class="label">?</span>
-                            <select id="tivi-n3" class="central-node-select" onchange="updateNodeDisplay(this)"></select>
-                        </div>
-                    </div>
-                </td>
-                <td>
-                    <div class="node-container">
-                        <div class="node-slot full-name-slot"><span class="label">?</span><select id="tivi-boss-left-1" class="track-node-select" onchange="updateNodeDisplay(this)"></select></div>
-                        <div class="node-slot full-name-slot"><span class="label">?</span><select id="tivi-boss-left-2" class="track-node-select" onchange="updateNodeDisplay(this)"></select></div>
-                    </div>
-                </td>
-                <td>
-                    <div class="node-container">
-                        <div class="node-slot full-name-slot"><span class="label">?</span><select id="tivi-boss-right-1" class="track-node-select" onchange="updateNodeDisplay(this)"></select></div>
-                        <div class="node-slot full-name-slot"><span class="label">?</span><select id="tivi-boss-right-2" class="track-node-select" onchange="updateNodeDisplay(this)"></select></div>
-                    </div>
-                </td>
-                <td>
-                    <div class="node-container">
-                        <div class="node-slot full-name-slot"><span class="label">?</span><select id="tivi-boss-path-track" class="path-track-select" onchange="updateNodeDisplay(this)"></select></div>
-                    </div>
-                </td>
-            </tr>
-
-            <tr class="selectable-row" onclick="selectEncounter(this, 'lylith-battle')">
-                <td class="order-cell" rowspan="2" onclick="event.stopPropagation()">
-                    <div class="node-container">
-                        <div class="node-slot"><span class="label">?</span><select id="lylith-order" class="order-select" onchange="updateNodeDisplay(this)"></select></div>
-                    </div>
-                </td>
-                <td class="encounter-label" data-key="lylith-battle"></td>
-                <td>
-                    <div class="node-container">
-                        <div class="node-slot full-name-slot variant-slot">
-                            <span class="label">?</span>
-                            <select id="lylith-battle-variant" class="variant-select" onchange="updateNodeDisplay(this); handleVariantChange(this)"></select>
-                        </div>
-                    </div>
-                </td>
-                <td>
-                    <div class="node-container">
-                        <div class="node-slot full-name-slot">
-                            <span class="label">?</span>
-                            <select id="lylith-n1" class="central-node-select" onchange="updateNodeDisplay(this)"></select>
-                        </div>
-                    </div>
-                </td>
-                <td>
-                    <div class="node-container">
-                        <div class="node-slot full-name-slot"><span class="label">?</span><select id="lylith-battle-left-1" class="track-node-select" onchange="updateNodeDisplay(this)"></select></div>
-                        <div class="node-slot full-name-slot"><span class="label">?</span><select id="lylith-battle-left-2" class="track-node-select" onchange="updateNodeDisplay(this)"></select></div>
-                    </div>
-                </td>
-                <td>
-                    <div class="node-container">
-                        <div class="node-slot full-name-slot"><span class="label">?</span><select id="lylith-battle-right-1" class="track-node-select" onchange="updateNodeDisplay(this)"></select></div>
-                        <div class="node-slot full-name-slot"><span class="label">?</span><select id="lylith-battle-right-2" class="track-node-select" onchange="updateNodeDisplay(this)"></select></div>
-                    </div>
-                </td>
-                <td>
-                    <div class="node-container">
-                        <div class="node-slot full-name-slot"><span class="label">?</span><select id="lylith-battle-path-track" class="path-track-select" onchange="updateNodeDisplay(this)"></select></div>
-                    </div>
-                </td>
-            </tr>
-            <tr class="selectable-row" onclick="selectEncounter(this, 'lylith-boss')">
-                <td class="encounter-label" data-key="lylith-boss"></td>
-                <td>
-                    <div class="node-container">
-                        <div class="node-slot full-name-slot variant-slot">
-                            <span class="label">?</span>
-                            <select id="lylith-boss-variant" class="variant-select" onchange="updateNodeDisplay(this); handleVariantChange(this)"></select>
-                        </div>
-                    </div>
-                </td>
-                <td>
-                    <div class="node-container">
-                        <div class="node-slot full-name-slot">
-                            <span class="label">?</span>
-                            <select id="lylith-n2" class="central-node-select" onchange="updateNodeDisplay(this)"></select>
-                        </div>
-                        <div class="node-slot full-name-slot">
-                            <span class="label">?</span>
-                            <select id="lylith-n3" class="central-node-select" onchange="updateNodeDisplay(this)"></select>
-                        </div>
-                    </div>
-                </td>
-                <td>
-                    <div class="node-container">
-                        <div class="node-slot full-name-slot"><span class="label">?</span><select id="lylith-boss-left-1" class="track-node-select" onchange="updateNodeDisplay(this)"></select></div>
-                        <div class="node-slot full-name-slot"><span class="label">?</span><select id="lylith-boss-left-2" class="track-node-select" onchange="updateNodeDisplay(this)"></select></div>
-                    </div>
-                </td>
-                <td>
-                    <div class="node-container">
-                        <div class="node-slot full-name-slot"><span class="label">?</span><select id="lylith-boss-right-1" class="track-node-select" onchange="updateNodeDisplay(this)"></select></div>
-                        <div class="node-slot full-name-slot"><span class="label">?</span><select id="lylith-boss-right-2" class="track-node-select" onchange="updateNodeDisplay(this)"></select></div>
-                    </div>
-                </td>
-                <td>
-                    <div class="node-container">
-                        <div class="node-slot full-name-slot"><span class="label">?</span><select id="lylith-boss-path-track" class="path-track-select" onchange="updateNodeDisplay(this)"></select></div>
-                    </div>
-                </td>
-            </tr>
-
-            <tr class="selectable-row" onclick="selectEncounter(this, 'lifemother')">
-                <td class="disabled-cell order-cell">—</td>
-                <td class="encounter-label" data-key="lifemother"></td>
-                <td>
-                    <div class="node-container">
-                        <div class="node-slot full-name-slot variant-slot">
-                            <span class="label">?</span>
-                            <select id="lifemother-variant" class="variant-select" onchange="updateNodeDisplay(this); handleVariantChange(this)"></select>
-                        </div>
-                    </div>
-                </td>
-                <td class="disabled-cell">—</td>
-                <td class="disabled-cell">—</td>
-                <td class="disabled-cell">—</td>
-                <td class="disabled-cell">—</td>
-            </tr>
-        </tbody>
+        <tbody id="encounter-tbody"></tbody>
     </table>
 
     <div id="encounter-info">
@@ -791,6 +429,91 @@
             document.getElementById('encounter-table').classList.toggle('simple-mode', checkbox.checked);
         }
 
+        // ---- Table row generation (edit layout here) ----
+        // The encounter table body is generated from this layout rather than
+        // hand-written, so each row type is defined once. 'astrael' and
+        // 'lifemother' are standalone intro/final rows; each of the four mid-run
+        // regions renders a paired Battle + Boss row that share a single Order
+        // cell (rowspan=2). All element ids match the keys used by encounterInfo,
+        // VARIANT_OPTIONS, and the populate* helpers, so those stay untouched.
+        const TOP_ROWS = ['astrael'];
+        const REGION_KEYS = ['maera', 'thaddeus', 'tivi', 'lylith'];
+        const BOTTOM_ROWS = ['lifemother'];
+
+        function slot(id, selectClass, { full = true, variant = false, variantHandler = false } = {}) {
+            const classes = ['node-slot'];
+            if (full) classes.push('full-name-slot');
+            if (variant) classes.push('variant-slot');
+            const onchange = variantHandler
+                ? 'updateNodeDisplay(this); handleVariantChange(this)'
+                : 'updateNodeDisplay(this)';
+            return `<div class="${classes.join(' ')}"><span class="label">?</span>`
+                 + `<select id="${id}" class="${selectClass}" onchange="${onchange}"></select></div>`;
+        }
+
+        const container = (...slots) => `<div class="node-container">${slots.join('')}</div>`;
+        const cell = inner => `<td>${inner}</td>`;
+        const variantCell = id => cell(container(slot(id, 'variant-select', { variant: true, variantHandler: true })));
+        const trackCell = (prefix, side) => cell(container(
+            slot(`${prefix}-${side}-1`, 'track-node-select'),
+            slot(`${prefix}-${side}-2`, 'track-node-select')
+        ));
+        const pathCell = prefix => cell(container(slot(`${prefix}-path-track`, 'path-track-select')));
+
+        // Standalone row (astrael / lifemother): no Order cell, variant only,
+        // remaining columns disabled.
+        function singleRowHtml(key) {
+            return `<tr class="selectable-row" onclick="selectEncounter(this, '${key}')">`
+                 + `<td class="disabled-cell order-cell">—</td>`
+                 + `<td class="encounter-label" data-key="${key}"></td>`
+                 + variantCell(`${key}-variant`)
+                 + `<td class="disabled-cell">—</td>`.repeat(4)
+                 + `</tr>`;
+        }
+
+        // Region pair: Battle row owns the rowspan'd Order cell and one central
+        // node; Boss row has two central nodes and inherits the Order cell.
+        function regionRowsHtml(region) {
+            const battleKey = `${region}-battle`;
+            const bossKey = `${region}-boss`;
+
+            const battle = `<tr class="selectable-row" onclick="selectEncounter(this, '${battleKey}')">`
+                + `<td class="order-cell" rowspan="2" onclick="event.stopPropagation()">`
+                + container(slot(`${region}-order`, 'order-select', { full: false }))
+                + `</td>`
+                + `<td class="encounter-label" data-key="${battleKey}"></td>`
+                + variantCell(`${battleKey}-variant`)
+                + cell(container(slot(`${region}-n1`, 'central-node-select')))
+                + trackCell(battleKey, 'left')
+                + trackCell(battleKey, 'right')
+                + pathCell(battleKey)
+                + `</tr>`;
+
+            const boss = `<tr class="selectable-row" onclick="selectEncounter(this, '${bossKey}')">`
+                + `<td class="encounter-label" data-key="${bossKey}"></td>`
+                + variantCell(`${bossKey}-variant`)
+                + cell(container(
+                    slot(`${region}-n2`, 'central-node-select'),
+                    slot(`${region}-n3`, 'central-node-select')
+                  ))
+                + trackCell(bossKey, 'left')
+                + trackCell(bossKey, 'right')
+                + pathCell(bossKey)
+                + `</tr>`;
+
+            return battle + boss;
+        }
+
+        function renderEncounterTable() {
+            const rows = [
+                ...TOP_ROWS.map(singleRowHtml),
+                ...REGION_KEYS.map(regionRowsHtml),
+                ...BOTTOM_ROWS.map(singleRowHtml)
+            ];
+            document.getElementById('encounter-tbody').innerHTML = rows.join('');
+        }
+
+        renderEncounterTable();
         populateEncounterLabels();
         populateCentralNodeSelects();
         populateTrackNodeSelects();
