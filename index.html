@@ -121,6 +121,21 @@
         }
         #simple-mode-toggle input { cursor: pointer; }
 
+        /* Subtle, low-emphasis reset control (distinct from the bold green
+           primary button) that clears all selections for the current run. */
+        #reset-grid {
+            margin-top: 12px;
+            background: none;
+            color: #9d9da3;
+            border: 1px solid #323238;
+            padding: 6px 12px;
+            font-weight: normal;
+            font-size: 0.85em;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        #reset-grid:hover { color: #ef4444; border-color: #ef4444; }
+
         table.simple-mode th:nth-last-child(-n+3),
         table.simple-mode td:nth-last-child(-n+3) {
             display: none;
@@ -155,6 +170,8 @@
         <input type="checkbox" checked onchange="toggleSimpleMode(this)">
         Simple mode
     </label>
+
+    <button type="button" id="reset-grid" onclick="resetGrid()">Reset grid</button>
 
     <footer id="attribution">
         Game information sourced from the <a href="https://monstertrain2.miraheze.org/wiki/Main_Page" target="_blank" rel="noopener">Monster Train 2 Wiki</a>.
@@ -401,6 +418,7 @@
             row.classList.add('selected-row');
             row.dataset.encounterKey = key;
             document.getElementById('encounter-info').textContent = getDisplayText(key);
+            saveState();
         }
 
         function handleVariantChange(selectEl) {
@@ -427,6 +445,72 @@
         // by toggling a class on the table.
         function toggleSimpleMode(checkbox) {
             document.getElementById('encounter-table').classList.toggle('simple-mode', checkbox.checked);
+            saveState();
+        }
+
+        // ---- Persistence (localStorage) ----
+        // The whole grid state — every dropdown value, the simple-mode toggle,
+        // and the currently selected row — is saved on every change and restored
+        // on load, so a run survives refreshes and reopening the page.
+        const STORAGE_KEY = 'mt2-soul-savior-state-v1';
+        const DEFAULT_INFO = 'Select a battle or boss to see information.';
+
+        function saveState() {
+            const selects = {};
+            document.querySelectorAll('#encounter-table select').forEach(sel => {
+                selects[sel.id] = sel.value;
+            });
+            const selectedRow = document.querySelector('.selected-row');
+            const state = {
+                selects,
+                simpleMode: document.querySelector('#simple-mode-toggle input').checked,
+                selectedKey: selectedRow ? (selectedRow.dataset.encounterKey || null) : null
+            };
+            try {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+            } catch (e) { /* storage unavailable (private mode, etc.) — ignore */ }
+        }
+
+        function restoreState() {
+            let state;
+            try {
+                state = JSON.parse(localStorage.getItem(STORAGE_KEY));
+            } catch (e) { return; }
+            if (!state) return;
+
+            if (state.selects) {
+                Object.entries(state.selects).forEach(([id, value]) => {
+                    const sel = document.getElementById(id);
+                    if (!sel) return;
+                    sel.value = value;
+                    updateNodeDisplay(sel); // refresh the slot label / selected styling
+                });
+            }
+            if (typeof state.simpleMode === 'boolean') {
+                const cb = document.querySelector('#simple-mode-toggle input');
+                cb.checked = state.simpleMode;
+                toggleSimpleMode(cb);
+            }
+            if (state.selectedKey) {
+                const label = document.querySelector(`.encounter-label[data-key="${state.selectedKey}"]`);
+                if (label) selectEncounter(label.closest('tr'), state.selectedKey);
+            }
+        }
+
+        function resetGrid() {
+            if (!confirm('Reset the whole grid? This clears every selection for the current run.')) return;
+            document.querySelectorAll('#encounter-table select').forEach(sel => {
+                sel.selectedIndex = 0; // first option is the "?" / "-- Select Variant --" placeholder
+                updateNodeDisplay(sel);
+            });
+            document.querySelectorAll('.selected-row').forEach(r => {
+                r.classList.remove('selected-row');
+                delete r.dataset.encounterKey;
+            });
+            document.getElementById('encounter-info').textContent = DEFAULT_INFO;
+            try {
+                localStorage.removeItem(STORAGE_KEY);
+            } catch (e) { /* ignore */ }
         }
 
         // ---- Table row generation (edit layout here) ----
@@ -520,6 +604,13 @@
         populateVariantSelects();
         populatePathTrackSelects();
         populateOrderSelects();
+
+        // Persist any dropdown change (selects fire 'change' which bubbles to the
+        // table); row clicks and the simple-mode toggle call saveState directly.
+        document.getElementById('encounter-table').addEventListener('change', saveState);
+
+        // Restore the saved run last, after every select has its options.
+        restoreState();
     </script>
 </body>
 </html>
