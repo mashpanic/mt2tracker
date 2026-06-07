@@ -16,10 +16,14 @@
         th, td { border: 1px solid #29292e; padding: 12px; text-align: left; vertical-align: middle; }
         th { background: #19191c; }
 
-        /* Shrink the Variant, Central Nodes, and Path columns to fit their fixed-width
-           boxes instead of stretching with extra empty space */
+        /* Shrink the Variant, Central Nodes, Left/Right Track, and Path columns to fit
+           their fixed-width boxes instead of stretching with extra empty space. This
+           leaves the Region column as the one flexible column that absorbs any extra
+           table width. */
         th:nth-child(3), td:nth-child(3),
         th:nth-child(4), td:nth-child(4),
+        th:nth-child(5), td:nth-child(5),
+        th:nth-child(6), td:nth-child(6),
         th:nth-child(7), td:nth-child(7) {
             width: 1%;
             white-space: nowrap;
@@ -117,7 +121,7 @@
         <thead>
             <tr>
                 <th>Order</th>
-                <th>Region / Phase</th>
+                <th>Region</th>
                 <th>Variant</th>
                 <th>Central Nodes</th>
                 <th>Left Track</th>
