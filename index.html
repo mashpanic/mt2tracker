@@ -19,13 +19,17 @@
         /* Shrink the Order, Variant, Central Nodes, Left/Right Track, and Path columns
            to fit their fixed-width boxes instead of stretching with extra empty space.
            This leaves the Region column as the one flexible column that absorbs any
-           extra table width. */
-        th:nth-child(1), td:nth-child(1),
-        th:nth-child(3), td:nth-child(3),
-        th:nth-child(4), td:nth-child(4),
-        th:nth-child(5), td:nth-child(5),
-        th:nth-child(6), td:nth-child(6),
-        th:nth-child(7), td:nth-child(7) {
+           extra table width.
+
+           Boss rows omit their own Order cell (it's covered by a rowspan from the
+           battle row above), which shifts every cell's position by one. Counting
+           from the END of the row instead of the start stays correct regardless of
+           whether the Order cell is present, since Variant/Central Nodes/Left/Right/
+           Path are always the last 5 cells. The Order cell itself is matched by its
+           .order-cell class (for the header, which always has all 7 columns, plain
+           position works fine). */
+        th:nth-child(1), td.order-cell,
+        th:nth-last-child(-n+5), td:nth-last-child(-n+5) {
             width: 1%;
             white-space: nowrap;
         }
@@ -112,7 +116,11 @@
         #attribution a { color: #9d9da3; }
         #attribution a:hover { color: #04d361; }
 
-        /* Simple mode hides the last 3 columns (Left Track, Right Track, Path) */
+        /* Simple mode hides the last 3 columns (Left Track, Right Track, Path).
+           Counting from the end (rather than nth-child(5/6/7)) keeps this correct
+           for boss rows, whose Order cell is covered by a rowspan from the row
+           above -- those rows have one fewer cell, which would otherwise shift
+           nth-child positions and leave a stray column visible. */
         #simple-mode-toggle {
             margin-top: 15px;
             display: flex;
@@ -125,9 +133,8 @@
         }
         #simple-mode-toggle input { cursor: pointer; }
 
-        table.simple-mode th:nth-child(5), table.simple-mode td:nth-child(5),
-        table.simple-mode th:nth-child(6), table.simple-mode td:nth-child(6),
-        table.simple-mode th:nth-child(7), table.simple-mode td:nth-child(7) {
+        table.simple-mode th:nth-last-child(-n+3),
+        table.simple-mode td:nth-last-child(-n+3) {
             display: none;
         }
 
