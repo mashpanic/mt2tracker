@@ -252,6 +252,25 @@
             });
         }
 
+        // ---- Wave set selector options (edit here) ----
+        // The possible wave sets for each region's First Combat (Battle row).
+        // Keyed by region name. A "-- Select Wave Set --" placeholder is added automatically.
+        const WAVE_SET_OPTIONS = {
+            'maera':    ['Dutiful Sentinels', 'Favored Ascent'],
+            'thaddeus': ['Gluttonous Masses'],
+            'tivi':     ['Harassing Snipers', 'Rabble-Rousers'],
+            'lylith':   ['Plague Legion'],
+        };
+
+        function populateWaveSetSelects() {
+            document.querySelectorAll('.wave-set-select').forEach(sel => {
+                const region = sel.id.replace(/-wave-set$/, '');
+                const names = WAVE_SET_OPTIONS[region] || [];
+                sel.innerHTML = '<option value="">-- Select Wave Set --</option>' +
+                    names.map(name => `<option value="${name}">${name}</option>`).join('');
+            });
+        }
+
         // ---- Path/Track selector options (edit here) ----
         // The two choices for which side of the train track was taken.
         // Each select also gets a "?" option for "not yet chosen", added automatically.
@@ -330,9 +349,9 @@
             'Korin the Judged': '',
 
             // Maera Boss
-            'Stern Sister': '',
-            'Sibling Hierarchy': '',
-            'Eldest Scion': '',
+            'Stern Sister': 'Maera gives Burst to self and enemies on Resolve. Defeat grants <em>Anxious</em> mutator: Enemy units gain Attack on Shift.',
+            'Sibling Hierarchy': 'Maera applies Rage on Shift. Defeat grants <em>Overachiever</em> mutator: Bosses enter with Burst.',
+            'Eldest Scion': 'Maera applies Armor to enemy units equal to their Attack on Resolve. Defeat grants <em>Guarded</em> mutator: Enemy units gain Armor equal to their Attack on Slay.',
 
             // Thaddeus Battle
             'Elebor the Unstoppable': '',
@@ -378,6 +397,7 @@
             const showsFullName = selectEl.classList.contains('central-node-select')
                 || selectEl.classList.contains('track-node-select')
                 || selectEl.classList.contains('variant-select')
+                || selectEl.classList.contains('wave-set-select')
                 || selectEl.id.endsWith('-path-track');
 
             const isUnselected = selectEl.value === '?' || selectEl.value === '';
@@ -597,6 +617,14 @@
             const key = id.replace(/-variant$/, '');
             return cell(container(slot(id, 'variant-select', { variant: true, variantHandler: true, aria: `${labelFor(key)} variant` })));
         };
+
+        // Battle rows get a second slot for the wave set alongside the boss variant.
+        const battleVariantCell = (region, battleKey) => {
+            return cell(container(
+                slot(`${battleKey}-variant`, 'variant-select', { variant: true, variantHandler: true, aria: `${labelFor(battleKey)} boss` }),
+                slot(`${region}-wave-set`, 'wave-set-select', { variant: true, aria: `${labelFor(region)} wave set` })
+            ));
+        };
         const trackCell = (prefix, side) => cell(container(
             slot(`${prefix}-${side}-1`, 'track-node-select', { aria: `${labelFor(prefix)} ${side} track 1` }),
             slot(`${prefix}-${side}-2`, 'track-node-select', { aria: `${labelFor(prefix)} ${side} track 2` })
@@ -625,7 +653,7 @@
                 + container(slot(`${region}-order`, 'order-select', { full: false, aria: `${labelFor(region)} turn order` }))
                 + `</td>`
                 + `<td class="encounter-label" data-key="${battleKey}"></td>`
-                + variantCell(`${battleKey}-variant`)
+                + battleVariantCell(region, battleKey)
                 + cell(container(slot(`${region}-n1`, 'central-node-select', { aria: `${labelFor(battleKey)} central node` })))
                 + trackCell(battleKey, 'left')
                 + trackCell(battleKey, 'right')
@@ -661,6 +689,7 @@
         populateCentralNodeSelects();
         populateTrackNodeSelects();
         populateVariantSelects();
+        populateWaveSetSelects();
         populatePathTrackSelects();
         populateOrderSelects();
 
